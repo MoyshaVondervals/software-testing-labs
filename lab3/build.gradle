@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'lab3'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.13'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    systemProperty 'browser', System.getProperty('browser', 'chrome')
+    systemProperty 'baseUrl', System.getProperty('baseUrl', 'https://www.multitran.com')
+    systemProperty 'userLogin', System.getProperty('userLogin', '')
+    systemProperty 'userPassword', System.getProperty('userPassword', '')
+    systemProperty 'headless', System.getProperty('headless', 'false')
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'short'
+    }
+}
+
+tasks.register('testChrome', Test) {
+    useJUnitPlatform()
+    systemProperty 'browser', 'chrome'
+}
+
+tasks.register('testFirefox', Test) {
+    useJUnitPlatform()
+    systemProperty 'browser', 'firefox'
+}
