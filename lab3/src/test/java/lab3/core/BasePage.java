@@ -3,6 +3,7 @@ package lab3.core;
 import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,6 +31,10 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
     }
 
+    protected WebElement waitClickable(String xpath) {
+        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+    }
+
     protected void click(String xpath) {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
     }
@@ -41,7 +46,7 @@ public abstract class BasePage {
     }
 
     protected void type(String xpath, String text) {
-        WebElement element = waitVisible(xpath);
+        WebElement element = waitClickable(xpath);
         element.clear();
         element.sendKeys(text);
     }

@@ -9,7 +9,9 @@ public class LanguagePage extends BasePage {
     }
 
     public void chooseLanguage(String languageText) {
-        click("//a[normalize-space(.)='" + languageText + "']");
+
+        clickByJs("//a[normalize-space(.)='" + languageText + "']");
+
     }
 
     public boolean isLanguageApplied(String expected) {

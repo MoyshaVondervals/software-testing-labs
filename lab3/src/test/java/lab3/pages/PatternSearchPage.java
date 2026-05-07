@@ -9,22 +9,34 @@ public class PatternSearchPage extends BasePage {
     }
 
     public void openDirect() {
-        openPath("/m.exe?a=228");
+        openPath("/m.exe?a=133");
     }
 
     public void fillPattern(String pattern) {
-        type("//textarea | //input[@type='text']", pattern);
+        org.openqa.selenium.WebElement input = waitVisible("//input[@name='s' and (not(@type) or @type='text')]");
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center'});" +
+                "arguments[0].value = arguments[1];" +
+                "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));",
+                input,
+                pattern
+        );
     }
 
     public void toggleFirstCheckbox() {
-        click("(//input[@type='checkbox'])[1]");
+        org.openqa.selenium.WebElement checkbox = waitVisible("//input[@name='FindVerbs']");
+        if (!checkbox.isSelected()) {
+            clickByJs("//input[@name='FindVerbs']");
+        }
     }
 
     public void search() {
-        click("//button[contains(normalize-space(.),'Search') or contains(normalize-space(.),'Поиск')] | //input[@type='submit' and (contains(@value,'Search') or contains(@value,'Поиск'))]");
+        clickByJs("//input[@value='']");
     }
 
     public boolean hasResultsOrEmpty() {
-        return isVisible("//table//tr//td") || isVisible("//*[contains(normalize-space(.),'Nothing found') or contains(normalize-space(.),'Ничего не найдено')]");
+        String resultsXpath = "//a[starts-with(@href, '/m.exe?') and contains(@href, 's=') and normalize-space(.)!='']";
+        return isVisible(resultsXpath)
+                || isVisible("//*[contains(normalize-space(.),'Nothing found') or contains(normalize-space(.),'Ничего не найдено')]");
     }
 }

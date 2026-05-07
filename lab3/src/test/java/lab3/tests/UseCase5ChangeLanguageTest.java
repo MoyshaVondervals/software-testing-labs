@@ -12,7 +12,7 @@ public class UseCase5ChangeLanguageTest extends BaseTest {
         HomePage home = new HomePage(driver);
         home.open();
         LanguagePage languagePage = home.goToLanguageMenu();
-        languagePage.chooseLanguage("Russian");
+        languagePage.chooseLanguage("English");
 
         Assertions.assertTrue(languagePage.isLanguageApplied("Russian") || languagePage.isLanguageApplied("English"),
                 "Language should be applied and visible in the header");

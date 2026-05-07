@@ -9,13 +9,11 @@ import org.junit.jupiter.api.Test;
 public class UseCase9UserProfileTest extends BaseTest {
     @Test
     public void viewUserQuestionsHistory() {
-        ForumPage forum = new ForumPage(driver);
-        forum.openEnglishForum();
-
         UserProfilePage profile = new UserProfilePage(driver);
-        profile.openFirstUserLink();
+        profile.openUserProfile("Moysha");
 
         Assertions.assertTrue(profile.hasForumParticipation(), "Forum participation section should be visible");
+        Assertions.assertTrue(profile.hasThreadAndReplyStats(), "Threads and replies counts should be visible or empty");
         profile.openQuestionsHistory();
         Assertions.assertTrue(profile.hasQuestionsHistory(), "Questions history should be visible");
     }
