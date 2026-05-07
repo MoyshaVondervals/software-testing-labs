@@ -9,18 +9,38 @@ public class ReadingRoomPage extends BasePage {
     }
 
     public void openDirect() {
-        openPath("/m.exe?a=96");
+        openPath("/m.exe?a=41");
     }
 
-    public void openFirstAuthor() {
-        click("(//a[contains(@href,'a=') and not(contains(@href,'l1='))])[1]");
+    public boolean hasAuthor() {
+        return isVisible("//a[contains(text(),'Евгений Замятин')]");
     }
 
-    public void openFirstMaterial() {
-        click("(//a[contains(@href,'a=') and (contains(@href,'txt') or contains(@href,'text') or contains(@href,'book'))])[1]");
+    public void openAuthor() {
+        click("//a[contains(text(),'Евгений Замятин')]");
     }
 
-    public boolean isTextVisible() {
-        return isVisible("//body//*[string-length(normalize-space(.))>50]");
+    public boolean hasMaterial() {
+        return isVisible("//a[contains(text(),'Мы')]");
+    }
+
+    public void openMaterial() {
+        click("//a[contains(text(),'Мы')]");
+    }
+
+    public boolean hasChangeLanguageButton() {
+        return isVisible("//a[contains(text(),'⇄')]");
+    }
+
+    public void changeLanguage() {
+        click("//a[contains(text(),'⇄')]");
+    }
+
+    public boolean hasSpecificRussianLine() {
+        return isVisible("//a[contains(text(),'Конспект: Объявление. Мудрейшая из линий. Поэма')]");
+    }
+
+    public boolean hasSpecificEnglishLine() {
+        return isVisible("//a[contains(text(),'An Announcement The Wisest of Lines A Poem')]");
     }
 }
