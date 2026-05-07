@@ -1,6 +1,8 @@
 package lab3.pages;
 
 import lab3.core.BasePage;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
@@ -18,21 +20,28 @@ public class HomePage extends BasePage {
     }
 
     public void selectPopularEnglishRussian() {
-        clickByJs("//a[@href='/m.exe?l1=1&l2=2']");
+        clickByJs("//a[contains(text(),'Англо‑русский')]");
     }
 
     public void searchFor(String query) {
-        type("//input[(self::input or self::textarea) and not(@type='hidden') and (@name='s' or @id='s' or contains(@placeholder,'type word') or contains(@aria-label,'type word') or @type='search' or @type='text')][1]", query);
+        org.openqa.selenium.WebElement input = waitVisible("//input[@id='s']");
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center'});" +
+                "arguments[0].value = arguments[1];" +
+                "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));",
+                input,
+                query
+        );
         clickByJs("//input[@type='submit' and (contains(@value,'Search') or contains(@value,'Поиск') or contains(@value,'Иск'))] | //button[contains(normalize-space(.),'Search') or contains(normalize-space(.),'Поиск')]");
     }
 
     public ContactsPage goToContacts() {
-        click("//a[contains(normalize-space(.),'Contacts') or contains(normalize-space(.),'Контак')]");
+        clickByJs("//a[contains(text(),'Контакты')]");
         return new ContactsPage(driver);
     }
 
     public LanguagePage goToLanguageMenu() {
-        click("//a[contains(normalize-space(.),'English') or contains(normalize-space(.),'Рус') or contains(normalize-space(.),'Language')]");
+        clickByJs("//a[normalize-space()='Russian']");
         return new LanguagePage(driver);
     }
 

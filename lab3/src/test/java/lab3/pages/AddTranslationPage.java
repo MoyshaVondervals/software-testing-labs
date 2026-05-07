@@ -1,6 +1,7 @@
 package lab3.pages;
 
 import lab3.core.BasePage;
+import lab3.core.TestData;
 import org.openqa.selenium.WebDriver;
 
 public class AddTranslationPage extends BasePage {
@@ -10,11 +11,15 @@ public class AddTranslationPage extends BasePage {
 
     public void openEnglishDictionary() {
         openPath("/m.exe?a=486&l1=1");
+        if (isVisible("//td[normalize-space(.)='Name']/following-sibling::td//input")) {
+            new LoginPage(driver).login(TestData.LOGIN, TestData.PASSWORD);
+            openPath("/m.exe?a=486&l1=1");
+        }
     }
 
     public void fillTranslation(String word, String translation) {
-        type("(//input[@type='text'])[1]", word);
-        type("(//input[@type='text'])[2]", translation);
+        type("(//input[@type='text' and not(@disabled) and not(@readonly)])[1]", word);
+        type("(//input[@type='text' and not(@disabled) and not(@readonly)])[2]", translation);
     }
 
     public void chooseTheme(String theme) {
