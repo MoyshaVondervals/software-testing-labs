@@ -9,7 +9,7 @@ public class SettingsPage extends BasePage {
     }
 
     public void openFromHeader() {
-        click("//a[contains(normalize-space(.),'Settings') or contains(normalize-space(.),'Настройки')]");
+        clickByJs("//a[contains(normalize-space(.),'Settings') or contains(normalize-space(.),'Настройки')]");
     }
 
     public void toggleFirstCheckbox() {

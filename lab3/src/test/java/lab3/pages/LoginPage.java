@@ -9,8 +9,8 @@ public class LoginPage extends BasePage {
     }
 
     public void login(String login, String password) {
-        type("//td[normalize-space(.)='Name']/following-sibling::td//input", login);
-        type("//td[normalize-space(.)='Password']/following-sibling::td//input", password);
+        typeByJs("//input[@name='UserName']", login);
+        typeByJs("//input[@name='UserPassword']", password);
         click("//button[normalize-space(.)='Sign in'] | //input[@type='submit' and (contains(@value,'Sign in') or contains(@value,'Войти'))]");
     }
 

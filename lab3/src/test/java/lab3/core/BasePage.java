@@ -51,6 +51,17 @@ public abstract class BasePage {
         element.sendKeys(text);
     }
 
+    protected void typeByJs(String xpath, String text) {
+        org.openqa.selenium.WebElement input = waitVisible(xpath);
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center'});" +
+                        "arguments[0].value = arguments[1];" +
+                        "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));",
+                input,
+                text
+        );
+    }
+
     protected String textOf(String xpath) {
         return waitVisible(xpath).getText();
     }
